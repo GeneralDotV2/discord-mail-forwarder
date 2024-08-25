@@ -157,5 +157,5 @@ def _send_reply_sync(creds: env.RegisteredEmail, reply_to: ProcessedEmail, subje
     mail = smtplib.SMTP(creds.smtp_host, creds.smtp_port)
     mail.starttls()
     mail.login(creds.email_user, creds.email_pass, initial_response_ok=True)
-    mail.send_message(message, creds.email_user, reply_to.sender)
+    mail.interaction.followup.send(message, creds.email_user, reply_to.sender)
     mail.quit()
