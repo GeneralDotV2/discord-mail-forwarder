@@ -46,7 +46,7 @@ class ReplyEmail(discord.ui.Modal):
         await interaction.followup.send("Reply Sent!", embed=embed)
 
     async def on_error(self, interaction: discord.Interaction, error: Exception) -> None:
-        await interaction.response.send_message('Oops! Something went wrong.', ephemeral=True)
+        await interaction.response.interaction.followup.send('Oops! Something went wrong.', ephemeral=True)
 
         # Make sure we know what the error actually is
         traceback.print_exception(type(error), error, error.__traceback__)
@@ -67,7 +67,7 @@ class ReplyButton(discord.ui.View):
 
     async def interaction_check(self, interaction: discord.Interaction) -> bool:
         if self.allowed_replier and self.allowed_replier not in interaction.user.roles:
-            await interaction.response.send_message("You are not allowed to reply to this email.", ephemeral=True)
+            await interaction.response.interaction.followup.send("You are not allowed to reply to this email.", ephemeral=True)
             return False
         
         return True
